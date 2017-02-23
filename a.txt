@@ -1,0 +1,8 @@
+        Prefix Verb   URI Pattern               Controller#Action
+products_index GET    /products/index(.:format) products#index
+      products GET    /products(.:format)       products#index
+       resumes GET    /resumes(.:format)        resumes#index
+               POST   /resumes(.:format)        resumes#create
+    new_resume GET    /resumes/new(.:format)    resumes#new
+        resume DELETE /resumes/:id(.:format)    resumes#destroy
+          root GET    /                         resumes#index

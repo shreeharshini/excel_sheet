@@ -1,0 +1,11 @@
+
+<%= link_to "back", products_path %>
+
+<% debug(@product) %>
+
+<% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+<% end %>
+
+
+<%= render :text => @product.inspect %>
