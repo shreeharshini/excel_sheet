@@ -7,54 +7,34 @@ class ProductsController < ApplicationController
 			 format.xlsx 
 	 	end
 	end
+	
 	def message
 	end
+	
 	def  fetch_excel_data
 	  f = Resume.last
-	 	byebug
 		a = f.attachment.file.file
 		n = a.length
 		if a[n-3 .. n] == 'xls'
-			ex = Roo::Excel.new("#{f.attachment.file.file}")
-				byebug
-				ex.default_sheet = ex.sheets[0] #Mention the sheet number
-				2.upto(ex.last_column) do |col|
-					title_head = ex.cell(col,2)
-					price_head = ex.cell(col,3)
-				end
+			Product.transaction do
+				ex = Roo::Excel.new("#{f.attachment.file.file}")
+				ex.default_sheet = ex.sheets[0] #Mention the sheet number of excel workbook
+				results = []
 				2.upto(ex.last_row) do |line| #start and end of row in which data is present
-					byebug
 					title = ex.cell(line,2)#the cell is in the format: cell(row X column)
 					price = ex.cell(line,ex.last_column)
-					byebug
 					@product = Product.create(:title => title,:price => price)
-					 @product.save!
+					if @product.errors.any?
+						 results << @product.errors.full_messages << @product.inspect
+						flash[:alert] = "the errors and their resp. records are:#{results.flatten}"
+					byebug
+					end
 					 flash[:success] = "data is stored successfully"
 				end
-		elsif a[n-3 .. n] == 'ods'
-			ex = Roo::Openoffice.new("#{f.attachment.file.file}")
-			byebug
-			ex.default_sheet = ex.sheets[0] #Mention the sheet number
-			2.upto(ex.last_row) do |line| #start and end of row in which data is present
-				byebug
-				title = ex.cell(line,2)#the cell is in the format: cell(row X column)
-				price = ex.cell(line,ex.last_column)
-				@product = Product.create(:title => title,:price => price)
-			  @product.save!
-			  flash[:success] = "data is stored successfully"
-			end
-		else	
-			byebug
-			ex.default_sheet = ex.sheets[0] #Mention the sheet number
-			2.upto(ex.last_row) do |line| #start and end of row in which data is present
-				byebug
-				title = ex.cell(line,2)#the cell is in the format: cell(row X column)
-				price = ex.cell(line,ex.last_column)
-				@product = Product.create(:title => title,:price => price)
+				if @product.errors.any?	#this is used to rollback transaction only when error occur		
+			  	raise ActiveRecord::Rollback #used to rollback the entire transaction
+				end
 			end
    	end
-  rescue ActiveRecord::RecordInvalid
- 		flash[:alert] = "check datatypes of the columns"
-   	render 'message'
-	end
+  end
 end

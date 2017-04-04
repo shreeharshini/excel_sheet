@@ -1,8 +1,42 @@
-        Prefix Verb   URI Pattern               Controller#Action
-products_index GET    /products/index(.:format) products#index
-      products GET    /products(.:format)       products#index
-       resumes GET    /resumes(.:format)        resumes#index
-               POST   /resumes(.:format)        resumes#create
-    new_resume GET    /resumes/new(.:format)    resumes#new
-        resume DELETE /resumes/:id(.:format)    resumes#destroy
-          root GET    /                         resumes#index
+                   Prefix Verb   URI Pattern                          Controller#Action
+         new_user_session GET    /users/sign_in(.:format)             devise/sessions#new
+             user_session POST   /users/sign_in(.:format)             devise/sessions#create
+     destroy_user_session DELETE /users/sign_out(.:format)            devise/sessions#destroy
+        new_user_password GET    /users/password/new(.:format)        devise/passwords#new
+       edit_user_password GET    /users/password/edit(.:format)       devise/passwords#edit
+            user_password PATCH  /users/password(.:format)            devise/passwords#update
+                          PUT    /users/password(.:format)            devise/passwords#update
+                          POST   /users/password(.:format)            devise/passwords#create
+ cancel_user_registration GET    /users/cancel(.:format)              devise/registrations#cancel
+    new_user_registration GET    /users/sign_up(.:format)             devise/registrations#new
+   edit_user_registration GET    /users/edit(.:format)                devise/registrations#edit
+        user_registration PATCH  /users(.:format)                     devise/registrations#update
+                          PUT    /users(.:format)                     devise/registrations#update
+                          DELETE /users(.:format)                     devise/registrations#destroy
+                          POST   /users(.:format)                     devise/registrations#create
+                  samples GET    /samples(.:format)                   samples#index
+                          POST   /samples(.:format)                   samples#create
+               new_sample GET    /samples/new(.:format)               samples#new
+              edit_sample GET    /samples/:id/edit(.:format)          samples#edit
+                   sample GET    /samples/:id(.:format)               samples#show
+                          PATCH  /samples/:id(.:format)               samples#update
+                          PUT    /samples/:id(.:format)               samples#update
+                          DELETE /samples/:id(.:format)               samples#destroy
+           products_index GET    /products/index(.:format)            products#index
+                 products GET    /products(.:format)                  products#index
+products_fetch_excel_data GET    /products/fetch_excel_data(.:format) products#fetch_excel_data
+         products_message GET    /products/message(.:format)          products#message
+         products_example GET    /products/example(.:format)          products#example
+                          GET    /samples(.:format)                   samples#index
+                          POST   /samples(.:format)                   samples#create
+                          GET    /samples/new(.:format)               samples#new
+                          GET    /samples/:id/edit(.:format)          samples#edit
+                          GET    /samples/:id(.:format)               samples#show
+                          PATCH  /samples/:id(.:format)               samples#update
+                          PUT    /samples/:id(.:format)               samples#update
+                          DELETE /samples/:id(.:format)               samples#destroy
+                  resumes GET    /resumes(.:format)                   resumes#index
+                          POST   /resumes(.:format)                   resumes#create
+               new_resume GET    /resumes/new(.:format)               resumes#new
+                   resume DELETE /resumes/:id(.:format)               resumes#destroy
+                     root GET    /                                    resumes#index

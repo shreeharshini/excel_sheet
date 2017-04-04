@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
  
+  devise_for :users
   resources :samples
   get 'products/index'
 
@@ -9,6 +10,8 @@ Rails.application.routes.draw do
   get 'products/fetch_excel_data'
 
     get 'products/message'
+
+    get 'products/example'
 
 
 ExcelNinja::Application.routes.draw do

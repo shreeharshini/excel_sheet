@@ -7,5 +7,13 @@
         <div class="alert alert-<%= key %>"><%= value %></div>
 <% end %>
 
+<% render :text => @product.inspect %>
 
-<%= render :text => @product.inspect %>
+<% @product.errors.full_messages.each do |msg| %>
+ <p>The error is:
+ 	<%= msg %><br>
+ 	error at the row of title:<%= @product.title %><br>
+ 	reason of error is: <%= @product.errors.details %>
+ </p> 
+<%end%>
+

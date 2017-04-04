@@ -10,7 +10,7 @@ class ResumesController < ApplicationController
    def create
       @resume = Resume.new(resume_params)
       if @resume.save
-         redirect_to resumes_path, notice: "The resume #{@resume.name} has been uploaded."
+         redirect_to products_fetch_excel_data_path, notice: "The resume #{@resume.name} has been uploaded."
       else
          render "new"
       end   
